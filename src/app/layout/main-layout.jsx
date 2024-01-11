@@ -1,8 +1,9 @@
+import Menu from "../components/menu/menu.component";
 
 function MainLayout({children}){
   return (
     <div>
-      <h1>menu</h1>
+      <Menu/>
       <div>
         {children}
       </div>
