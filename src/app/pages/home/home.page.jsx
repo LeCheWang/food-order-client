@@ -30,9 +30,9 @@ function Home(){
       <ul className="flex justify-center">
         {categories && categories.map((category, index) => {
           return (
-            <li onClick={()=> setCurrentCategoryID(category._id)} className="w-[200px] m-4 text-center" key={index}>
+            <li onClick={()=> setCurrentCategoryID(category._id)} className="w-[200px] m-4 text-center shadow-sm shadow-black rounded-xl overflow-hidden cursor-pointer hover:bg-[#5ab7fd]" key={index}>
               <h1 className="font-bold text-xl">{category.name}</h1>
-              <img src={category.img} alt="" />
+              <img className="hover:scale-150 transition-all" src={category.img} alt="" />
             </li>
           )
         })}
@@ -40,11 +40,14 @@ function Home(){
       <ul className="flex flex-wrap justify-around text-center">
         {foods && foods.map((food, index)=>{
           return (
-            <li className="w-[300px] h-[400px] mx-4" key={index}>
-              <h1>{food.name}</h1>
+            <li className="w-[300px] mx-4 shadow-sm shadow-black mt-8 rounded-xl overflow-hidden" key={index}>
               <div className="h-[200px] overflow-hidden">
                 <img className="w-full h-full" src={food.img} alt="" />
               </div>
+              <h1 className="text-xl mt-2">{food.name}</h1>
+              <p className="text-left pl-2">{food.price} VNĐ</p>
+              <p className="text-left">{food.address}</p>
+              <p className="bg-[#333] text-white p-2 cursor-pointer hover:bg-[#b1b1b1] hover:text-[#6bebff]">Thêm vào giỏ</p>
             </li>
           )
         })}
