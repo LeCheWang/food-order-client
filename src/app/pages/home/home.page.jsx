@@ -5,24 +5,32 @@ import { getFoods } from "../../services/food.service";
 function Home(){
   const [categories, setCategories] = useState([]);
   const [foods, setFoods] = useState([]);
-
+  const [currentCategoryID, setCurrentCategoryID] = useState();
+ 
   useEffect(()=>{
-    async function fetchData(){
+    async function fetchDataCategories(){
       const cate = await getCategory();
       const firstCate = cate[0];
-      const foods = await getFoods(firstCate._id);
-      setFoods(foods);
+      setCurrentCategoryID(firstCate._id);
       setCategories(cate);
     }
-    fetchData();
+    fetchDataCategories();
   }, []);
+
+  useEffect(()=> {
+    async function fetchDataFood(){
+      const foods = await getFoods(currentCategoryID);
+      setFoods(foods);
+    }
+    fetchDataFood();
+  }, [currentCategoryID])
 
   return (
     <div>
       <ul className="flex justify-center">
         {categories && categories.map((category, index) => {
           return (
-            <li className="w-[200px] m-4 text-center" key={index}>
+            <li onClick={()=> setCurrentCategoryID(category._id)} className="w-[200px] m-4 text-center" key={index}>
               <h1 className="font-bold text-xl">{category.name}</h1>
               <img src={category.img} alt="" />
             </li>
