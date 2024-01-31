@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react"
 import { getCategory } from "../../services/category.service";
 import { getFoods } from "../../services/food.service";
+import StorageService from "../../services/storage.service";
+import CartService from "../../services/cart.service";
 
 function Home(){
   const [categories, setCategories] = useState([]);
   const [foods, setFoods] = useState([]);
   const [currentCategoryID, setCurrentCategoryID] = useState();
+  const loginAccount = StorageService.getObject("loginAccount");
  
   useEffect(()=>{
     async function fetchDataCategories(){
@@ -24,6 +27,11 @@ function Home(){
     }
     fetchDataFood();
   }, [currentCategoryID])
+
+  const handleAddToCart = async (id) => {
+    await CartService.addToCart({account_id: loginAccount._id, food_id: id, quantity: 1});
+    alert("Added to cart!");
+  }
 
   return (
     <div>
@@ -47,7 +55,7 @@ function Home(){
               <h1 className="text-xl mt-2">{food.name}</h1>
               <p className="text-left pl-2">{food.price} VNĐ</p>
               <p className="text-left">{food.address}</p>
-              <p className="bg-[#333] text-white p-2 cursor-pointer hover:bg-[#b1b1b1] hover:text-[#6bebff]">Thêm vào giỏ</p>
+              <p onClick={() => handleAddToCart(food._id)} className="bg-[#333] text-white p-2 cursor-pointer hover:bg-[#b1b1b1] hover:text-[#6bebff]">Thêm vào giỏ</p>
             </li>
           )
         })}

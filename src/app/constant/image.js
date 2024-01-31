@@ -1,0 +1,1 @@
+export const LOGO = 'https://sgweb.vn/wp-content/uploads/2022/12/logo-nha-hang-1.jpg'
